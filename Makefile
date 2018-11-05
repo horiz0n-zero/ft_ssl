@@ -6,15 +6,18 @@
 #    By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 14:29:24 by afeuerst          #+#    #+#              #
-#    Updated: 2018/11/04 16:00:04 by afeuerst         ###   ########.fr        #
+#    Updated: 2018/11/05 12:39:09 by afeuerst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ssl
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -fsanitize=address -O0 -g -Wall -Wextra -Werror
+FLAGS += -Wno-unused-parameter -Wno-unused-const-variable
 INCLUDES = ./includes/
 SRC = ./sources/ft_ssl.c \
 	./sources/ssl_get_algo.c \
+	./sources/digest_verify_execute.c \
+	./sources/cypher_base64_verify_execute.c \
 	./sources/algo/algo_md5.c \
 	./sources/algo/md5_body.c \
 	./sources/algo/algo_sha256.c \

@@ -6,21 +6,32 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 15:05:16 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/10/31 10:41:56 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/05 14:01:25 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void				usage(t_ssl *const ssl)
+void						usage(t_ssl *const ssl)
 {
-	(void)ssl;
-	write(STDERR_FILENO, "usage: command [-pqr] [-s string] [files ...]",
-			sizeof("usage: command [-pqr] [-s string] [files ...]"));
+	static const char		*usages[] =
+	{
+		"usage: { md5 sha256 } [-pqr] [-s string] [files ...]\n",
+		"usage: base64 [-de] [-i input file] [-o output file]\n",
+		"usage: { des des-ecb des-cbc } [-ade] [-i input file] [-o output file] \
+			[-k key] [-p password] [-s salt] [-v vector]\n"
+	};
+
+	if (ssl->algo->type & TYPE_DIGEST)
+		write(STDERR_FILENO, usages[0], ft_strlen(usages[0]));
+	else if (ssl->algo->execute == base64_execute)
+		write(STDERR_FILENO, usages[1], ft_strlen(usages[1]));
+	else if (ssl->algo->type & TYPE_CIPHER)
+		write(STDERR_FILENO, usages[2], ft_strlen(usages[2]));
 	exit(EXIT_FAILURE);
 }
 
-void				exit_flags(t_ssl *const ssl, const char c)
+void						exit_flags(t_ssl *const ssl, const char c)
 {
 	write(STDERR_FILENO, "ft_ssl: illegal option -- ",
 			sizeof("ft_ssl: illegal option -- "));
@@ -29,9 +40,18 @@ void				exit_flags(t_ssl *const ssl, const char c)
 	usage(ssl);
 }
 
-void				exit_nostring(t_ssl *const ssl)
+void						exit_badcombination(t_ssl *const ssl)
 {
-	write(STDERR_FILENO, "ft_ssl: option requires an argument -- s\n",
-			sizeof("ft_ssl: option requires an argument -- s\n"));
+	write(STDERR_FILENO, "ft_ssl: error: bad flags combination\n",
+			sizeof("ft_ssl: error: bad flags combination\n"));
+	usage(ssl);
+}
+
+void						exit_nostring(t_ssl *const ssl, const char c)
+{
+	write(STDERR_FILENO, "ft_ssl: option requires an argument -- ",
+			sizeof("ft_ssl: option requires an argument -- "));
+	write(STDERR_FILENO, &c, 1);
+	write(STDERR_FILENO, "\n", 1);
 	usage(ssl);
 }

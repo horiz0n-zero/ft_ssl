@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:37:08 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/04 15:40:18 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/05 16:47:31 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static char					*printable_digest(const unsigned char *const digest)
 	return (printable);
 }
 
-char						*algo_sha256(const char *const src)
+char						*algo_sha256(const char *const src, const size_t len)
 {
 	t_sha256				sha;
 	static unsigned char	hash[33];
@@ -122,7 +122,7 @@ char						*algo_sha256(const char *const src)
 	sha.state[5] = 0x9b05688c;
 	sha.state[6] = 0x1f83d9ab;
 	sha.state[7] = 0x5be0cd19;
-	sha256_update(&sha, (void*)src, ft_strlen(src));
+	sha256_update(&sha, (void*)src, len);
 	sha256_finish(&sha, (void*)hash);
 	hash[32] = 0;
 	return (printable_digest(hash));
