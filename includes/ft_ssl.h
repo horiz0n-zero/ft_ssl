@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/05 16:45:21 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/06 10:16:50 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct					s_ssl
 # define FLAGS_E 32
 # define FLAGS_I 64
 # define FLAGS_O 128
+# define FLAGS_N 256
 # define STATE_FILE 1
 
 	const struct s_algo			*algo;
@@ -76,8 +77,8 @@ void							exit_badcombination(t_ssl *const ssl);
 void							usage(t_ssl *const ssl);
 void							error_file(t_ssl *const ssl,
 		const char *const file);
-char							*ft_strjoin(const char *s1,
-		const char *s2);
+char							*lstrjoin(const char *s1, size_t l1,
+		const char *s2, size_t l2);
 char							*ft_strndup(const char *const src,
 		const size_t len);
 int								ft_strcomparable(const char *src,
