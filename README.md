@@ -15,10 +15,12 @@ ft_ssl md5|sha256 [-pqr] [-s string] [file ...]
 
 ft_ssl base64 [-de] [-i input file] [-o output file]
 
-     -e                  encode (default)
+     -e                  Encode (default)
     
      -d                  Decode incoming Base64 stream into binary data.
      
      -i input_file       Read input from input_file.  Default is stdin; passing - also represents stdin.
 
      -o output_file      Write output to output_file.  Default is stdout; passing - also represents stdout.
+
+     -n                  Do not place a new line every 64 encoded bytes
