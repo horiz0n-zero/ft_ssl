@@ -4,6 +4,7 @@ cryptographic hashing algorithms [md5 sha256]
 *Usage*
 
 ft_ssl md5|sha256 [-pqr] [-s string] [file ...]
+     
      -s string
              Print a checksum of the given string.
 
