@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:37:08 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/05 16:47:31 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/06 13:31:35 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ static void					sha256_finish(t_sha256 *const sha,
 	sha256_finaltransform(sha, hash, 0);
 }
 
-static char					*printable_digest(const unsigned char *const digest)
+static char					*printable_digest(
+		const unsigned char *const digest)
 {
 	static char				printable[65];
 	unsigned char			current;
@@ -107,11 +108,13 @@ static char					*printable_digest(const unsigned char *const digest)
 	return (printable);
 }
 
-char						*algo_sha256(const char *const src, const size_t len)
+char						*algo_sha256(t_ssl *const ssl,
+		const char *const src, const size_t len)
 {
 	t_sha256				sha;
 	static unsigned char	hash[33];
 
+	(void)ssl;
 	sha.data_length = 0;
 	sha.bit_length = 0;
 	sha.state[0] = 0x6a09e667;

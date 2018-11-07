@@ -24,4 +24,4 @@ ft_ssl base64 [-de] [-i input file] [-o output file]
 
      -o output_file      Write output to output_file.  Default is stdout; passing - also represents stdout.
 
-     -n                  Do not place a new line every 64 encoded bytes
+     -n                  place a new line every 64 encoded bytes

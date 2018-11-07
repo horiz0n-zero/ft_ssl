@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl.c                                           :+:      :+:    :+:   */
+/*   base64.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/27 14:32:40 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 12:59:59 by afeuerst         ###   ########.fr       */
+/*   Created: 2018/11/07 09:44:28 by afeuerst          #+#    #+#             */
+/*   Updated: 2018/11/07 12:47:55 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#ifndef BASE64_H
+# define BASE64_H
 
-int						main(int argc, char **argv)
-{
-	t_ssl				ssl;
+# include "ft_ssl.h"
 
-	(void)argc;
-	ssl.argv = ++argv;
-	ssl.flags = 0;
-	ssl.algo = NULL;
-	ssl_get_algo(&ssl, *argv++);
-	ssl.algo->verify(&ssl, argv);
-	ssl.algo->execute(&ssl, 0);
-	return (EXIT_SUCCESS);
-}
+# define INVALID "Invalid character in input stream.\n"
+
+#endif

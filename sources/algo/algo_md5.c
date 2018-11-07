@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:36:21 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/05 16:45:27 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/06 13:31:42 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ static char				*printable_digest(const unsigned char *const digest)
 	return (printable);
 }
 
-char					*algo_md5(const char *const src, const size_t len)
+char					*algo_md5(t_ssl *const ssl,
+		const char *const src, const size_t len)
 {
 	struct s_md5		md5;
 	char				digest[16];
 
+	(void)ssl;
 	md5.a = 0x67452301;
 	md5.b = 0xefcdab89;
 	md5.c = 0x98badcfe;

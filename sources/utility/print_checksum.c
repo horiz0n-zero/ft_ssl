@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 15:37:17 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 10:01:21 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/06 13:33:33 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void					print_checksum(t_ssl *const ssl, const char *const src,
 
 	if (src == name && !isflagsp)
 		ssl->source_lenght = ft_strlen(src);
-	checksum = ssl->algo->checksum(src, ssl->source_lenght);
+	checksum = ssl->algo->checksum(ssl, src, ssl->source_lenght);
 	if (ssl->flags & FLAGS_Q || isflagsp)
 		write(STDOUT_FILENO, checksum, ft_strlen(checksum));
 	else if (ssl->flags & FLAGS_R)

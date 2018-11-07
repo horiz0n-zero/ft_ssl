@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 12:28:43 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/07 09:26:32 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef struct s_ssl			t_ssl;
 
 typedef struct					s_algo
 {
-	char						*(*checksum)(const char *const src, const size_t len);
+	char						*(*checksum)(t_ssl *const ssl,
+			const char *const src, const size_t len);
 	const char					*algo;
 	int							type;
 # define TYPE_STANDARD 1
@@ -32,7 +33,7 @@ typedef struct					s_algo
 
 	int							pad;
 	void						(*verify)(t_ssl *const ssl, char **argv);
-	void						(*execute)(t_ssl *const ssl, int cflags); // cflags for norme
+	void						(*execute)(t_ssl *const ssl, int cflags);
 }								t_algo;
 
 typedef struct					s_ssl
@@ -53,14 +54,18 @@ typedef struct					s_ssl
 
 	const struct s_algo			*algo;
 	size_t						source_lenght;
+	int							stdin;
+	const char					*stdin_file;
+	int							stdout;
 }								t_ssl;
 
 void							ssl_get_algo(t_ssl *const ssl,
 		const char *const type);
 
 
-char							*algo_md5(const char *const src, const size_t len);
-char							*algo_sha256(const char *const src, const size_t len);
+char							*algo_md5(t_ssl *const ssl, const char *const src, const size_t len);
+char							*algo_sha256(t_ssl *const ssl, const char *const src, const size_t len);
+char							*algo_base64(t_ssl *const ssl, const char *const src, const size_t len);
 
 void							digest_execute(t_ssl *const ssl, int c_flags);
 void							digest_verify(t_ssl *const ssl, char **argv);
@@ -69,7 +74,8 @@ void							base64_verify(t_ssl *const ssl, char **argv);
 
 void							print_checksum(t_ssl *const ssl,
 		const char *const src, const char *const name, const int isflagsp);
-void							read_stdin(t_ssl *const ssl);
+void							read_stdin_print(t_ssl *const ssl);
+void							*read_stdin(t_ssl *const ssl);
 
 void							exit_flags(t_ssl *const ssl, const char c);
 void							exit_nostring(t_ssl *const ssl, const char c);
@@ -77,6 +83,8 @@ void							exit_badcombination(t_ssl *const ssl);
 
 void							usage(t_ssl *const ssl);
 void							error_file(t_ssl *const ssl,
+		const char *const file);
+void							*error_file_null(t_ssl *const ssl,
 		const char *const file);
 char							*lstrjoin(const char *s1, size_t l1,
 		const char *s2, size_t l2);
@@ -89,5 +97,12 @@ int								ft_strcmp(register const char *s1,
 		register const char *s2);
 void							ft_memcpy(void *dst, const void *src, size_t n);
 void							ft_memset(char *dst, unsigned long len);
+void							ssl_input_print(t_ssl *const ssl, const char *const file,
+		const int fd);
+void							ssl_file_print(t_ssl *const ssl, const char *const file);
+
+void							*ssl_input(t_ssl *const ssl, const char *const file,
+		const int fd);
+void							*ssl_file(t_ssl *const ssl, const char *const file);
 
 #endif

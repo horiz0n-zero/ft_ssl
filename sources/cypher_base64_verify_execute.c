@@ -6,13 +6,14 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 09:55:52 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 09:05:51 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/07 12:49:05 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+#include "base64.h"
 
-static const int		g_available_flags[256] =
+static const int	g_available_flags[256] =
 {
 	['d'] = FLAGS_D,
 	['D'] = FLAGS_D,
@@ -26,33 +27,77 @@ static const int		g_available_flags[256] =
 	['N'] = FLAGS_N
 };
 
-void					base64_execute(t_ssl *const ssl, int c_flags)
+void				base64_execute(t_ssl *const ssl, int c_flags)
 {
-	
+	void			*ptr;
+	void			*result;
+
+	if (ssl->stdin == STDIN_FILENO)
+		ptr = read_stdin(ssl);
+	else
+		ptr = ssl_input(ssl, ssl->stdin_file, ssl->stdin);
+	if (!ptr)
+		return ;
+	result = ssl->algo->checksum(ssl, ptr, ssl->source_lenght);
+	write(ssl->stdout, result, ft_strlen(result));
+	free(ptr);
+	if (ft_strcmp(result, INVALID))
+		free(result);
+	if (ssl->stdout != STDOUT_FILENO)
+		close(ssl->stdout);
+	if (ssl->stdin != STDIN_FILENO)
+		close(ssl->stdin);
 }
 
-void					base64_verify(t_ssl *const ssl, char **argv)
+static inline void	base64_io(t_ssl *const ssl, const char *const file,
+		const int state)
 {
-	char				*tmp;
+	int				fd;
 
-	while (*argv && **argv == '-')
+	if (state & FLAGS_I)
+		fd = open(file, O_RDONLY);
+	else
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC,
+				S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
+	if (fd < -1)
+		error_file(ssl, file);
+	if (state & FLAGS_I)
 	{
-		tmp = *argv++;
-		if (*++tmp == '-')
-			break ;
-		while (*tmp)
+		if (ssl->stdin != STDIN_FILENO)
+			close(ssl->stdin);
+		ssl->stdin = fd;
+		ssl->stdin_file = file;
+	}
+	else
+	{
+		if (ssl->stdout != STDOUT_FILENO)
+			close(ssl->stdout);
+		ssl->stdout = fd;
+	}
+}
+
+void				base64_verify(t_ssl *const ssl, char **argv)
+{
+	char			*tmp;
+	int				state;
+
+	ssl->stdin = STDIN_FILENO;
+	ssl->stdout = STDOUT_FILENO;
+	while (*argv && **argv == '-' && (tmp = *argv++))
+	{
+		while (*++tmp)
 		{
-			if (g_available_flags[(int)*tmp])
+			state = g_available_flags[(int)*tmp];
+			if ((ssl->flags |= state) && state & (FLAGS_I | FLAGS_O))
 			{
-				ssl->flags |= g_available_flags[(int)*tmp];
-				if (g_available_flags[(int)*tmp++] & (FLAGS_I | FLAGS_O))
-					!*argv ? exit_nostring(ssl, *(tmp - 1)) : argv++;
+				if (!*argv)
+					exit_nostring(ssl, *tmp);
+				else
+					base64_io(ssl, *argv++, state);
+				break ;
 			}
-			else
-				exit_flags(ssl, *tmp);
 		}
 	}
 	if (ssl->flags & FLAGS_E && ssl->flags & FLAGS_D)
 		exit_badcombination(ssl);
-	// default read stdin ???
 }

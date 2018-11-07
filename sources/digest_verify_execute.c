@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 09:37:54 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/05 16:38:35 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/06 16:34:00 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,6 @@ static const char		g_available_flags[256] =
 	['s'] = FLAGS_S,
 	['S'] = FLAGS_S
 };
-
-static void				ssl_file(t_ssl *const ssl, const char *const file)
-{
-	const int			fd = open(file, O_RDONLY);
-	struct stat			info;
-	char				*content;
-
-	if (fd == -1)
-		return (error_file(ssl, file));
-	if (stat(file, &info) == -1)
-		return (error_file(ssl, file));
-	if (!(content = malloc((size_t)info.st_size + 1)))
-		return (error_file(ssl, file));
-	if (read(fd, content, (size_t)info.st_size) != (ssize_t)info.st_size)
-		return (error_file(ssl, file));
-	close(fd);
-	*(content + info.st_size) = 0;
-	ssl->source_lenght = (size_t)info.st_size;
-	print_checksum(ssl, content, file, 0);
-	free(content);
-}
 
 void					digest_execute(t_ssl *const ssl, int current_flags)
 {
@@ -62,7 +41,7 @@ void					digest_execute(t_ssl *const ssl, int current_flags)
 			while (*tmp)
 				current_flags |= g_available_flags[(int)*tmp++];
 			if (current_flags & FLAGS_P)
-				read_stdin(ssl);
+				read_stdin_print(ssl);
 			if (current_flags & FLAGS_S)
 			{
 				print_checksum(ssl, *ssl->argv, *ssl->argv, 0);
@@ -70,7 +49,7 @@ void					digest_execute(t_ssl *const ssl, int current_flags)
 			}
 		}
 		else
-			ssl_file(ssl, tmp);
+			ssl_file_print(ssl, tmp);
 	}
 }
 
@@ -96,5 +75,5 @@ void					digest_verify(t_ssl *const ssl, char **argv)
 		}
 	}
 	if (!*argv && !(ssl->flags & FLAGS_P) && !(ssl->flags & FLAGS_S))
-		read_stdin(ssl);
+		read_stdin_print(ssl);
 }

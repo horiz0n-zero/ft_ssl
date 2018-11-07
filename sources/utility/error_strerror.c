@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 15:46:51 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/01 14:51:40 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/06 16:47:13 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@ void					error_file(t_ssl *const ssl, const char *const file)
 	const char *const	err = strerror(errno);
 
 	(void)ssl;
-	write(STDERR_FILENO, "ft_ssl: ", 8);
-	write(STDERR_FILENO, file, ft_strlen(file));
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, err, ft_strlen(err));
-	write(STDERR_FILENO, "\n", 1);
+	ft_fprintf(STDERR_FILENO, "ft_ssl: %s: %s\n", file, err);
+}
+
+void					*error_file_null(t_ssl *const ssl, const char *const file)
+{
+	const char *const	err = strerror(errno);
+
+	(void)ssl;
+	ft_fprintf(STDERR_FILENO, "ft_ssl: %s: %s\n", file, err);
+	return (NULL);
 }
