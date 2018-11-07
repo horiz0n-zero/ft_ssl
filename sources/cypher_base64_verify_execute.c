@@ -15,16 +15,16 @@
 
 static const int	g_available_flags[256] =
 {
-	['d'] = FLAGS_D,
-	['D'] = FLAGS_D,
-	['e'] = FLAGS_E,
-	['E'] = FLAGS_E,
-	['i'] = FLAGS_I,
-	['I'] = FLAGS_I,
-	['o'] = FLAGS_O,
-	['O'] = FLAGS_O,
-	['n'] = FLAGS_N,
-	['N'] = FLAGS_N
+    ['d'] = FLAGS_D,
+    ['D'] = FLAGS_D,
+    ['e'] = FLAGS_E,
+    ['E'] = FLAGS_E,
+    ['i'] = FLAGS_I,
+    ['I'] = FLAGS_I,
+    ['o'] = FLAGS_O,
+    ['O'] = FLAGS_O,
+    ['n'] = FLAGS_N,
+    ['N'] = FLAGS_N
 };
 
 void				base64_execute(t_ssl *const ssl, int c_flags)

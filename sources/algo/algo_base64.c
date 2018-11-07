@@ -24,6 +24,26 @@ static const char		g_base64[] =
 	'4', '5', '6', '7', '8', '9', '+', '/'
 };
 
+static const unsigned char g_base64de[] =
+{
+    255, 255, 255, 255, 255, 255, 255, 255,
+    255, 255, 255, 255, 255, 255, 255, 255,
+    255, 255, 255, 255, 255, 255, 255, 255,
+    255, 255, 255, 255, 255, 255, 255, 255,
+    255, 255, 255, 255, 255, 255, 255, 255,
+    255, 255, 255, 62, 255, 255, 255, 63,
+    52, 53, 54, 55, 56, 57, 58, 59,
+    60, 61, 255, 255, 255, 255, 255, 255,
+    255, 0, 1, 2, 3, 4, 5, 6,
+    7, 8, 9, 10, 11, 12,  13, 14,
+    15, 16, 17, 18, 19, 20, 21, 22,
+    23, 24, 25, 255, 255, 255, 255, 255,
+    255, 26, 27, 28, 29, 30, 31, 32,
+    33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48,
+    49, 50, 51, 255, 255, 255, 255, 255
+};
+
 static void				encode_base64(char *dst, const unsigned char *src,
 		size_t len)
 {
@@ -54,21 +74,55 @@ static void				encode_base64(char *dst, const unsigned char *src,
 	*dst = 0;
 }
 
-static void				decode_base64(char *dst, const unsigned char *src,
-		size_t len)
+static int              decodable_base64(const char *src, size_t len)
 {
-	while (len > 2)
-	{
-		while (*src == ' ')
-			src++ && len++; // ???
-		*dst++ = (src[0] << 2) | (src[1] >> 4);
-		*dst++ = (src[1] << 4) | (src[2] >> 2);
-		*dst++ = (src[2] << 6) | src[3];
-		len -= 2;
+    if (len < 4)
+    {
+        *(char*)src = '=';
+        return (0);
+    }
+    while (len--)
+    {
+        if (*src < 0)
+            return (1);
+        if (g_base64de[(int)*src++] == 255)
+            return (1);
+    }
+    return (0);
+}
+
+static void				decode_base64(unsigned char *dst, const unsigned char *src,
+		const size_t len)
+{
+	unsigned int        i;
+	unsigned char       c;
+
+    i = -1;
+	while (++i < (unsigned int)len)
+    {
+		if (src[i] == '=')
+			break ;
+        c = g_base64de[(int)src[i]];
+		if ((i & 0x3) == 0)
+			*dst = (c << 2) & 0xFF;
+		else if ((i & 0x3) == 1)
+        {
+			*dst++ |= (c >> 4) & 0x3;
+			*dst = (c & 0xF) << 4; 
+        }
+		else if ((i & 0x3) == 2)
+        {
+			*dst++ |= (c >> 2) & 0xF;
+			*dst = (c & 0x3) << 6;
+		}
+        else
+			*dst++ |= c;
 	}
+    *dst++ = '\n';
 	*dst = 0;
 }
 
+/*
 static inline int		isbase64_decodable(const char *src,
 		size_t len)
 {
@@ -95,7 +149,7 @@ static inline int		isbase64_decodable(const char *src,
 	if (len == 1 && *src == '=' && *(src - 1) == '=')
 		return (0);
 	return (1);
-}
+}*/
 
 char					*algo_base64(t_ssl *const ssl,
 		const char *const src, const size_t len)
@@ -105,8 +159,10 @@ char					*algo_base64(t_ssl *const ssl,
 
 	if (ssl->flags & FLAGS_D)
 	{
-		if (!isbase64_decodable(src, len))
-			return (INVALID);
+		//if (!isbase64_decodable(src, len)) need other things
+		//	return (INVALID);
+        if (decodable_base64(src, len))
+            return (INVALID);
 		ptr = malloc(((len * 8) / 6) + 1);
 		decode_base64(ptr, (const void*)src, len);
 	}
