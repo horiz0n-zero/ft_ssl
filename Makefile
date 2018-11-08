@@ -6,7 +6,7 @@
 #    By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 14:29:24 by afeuerst          #+#    #+#              #
-#    Updated: 2018/11/08 14:20:36 by afeuerst         ###   ########.fr        #
+#    Updated: 2018/11/08 15:39:33 by afeuerst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,9 @@ SRC = ./sources/ft_ssl.c \
 	./sources/utility/ft_strndup.c \
 	./sources/utility/ft_strjoin.c \
 	./sources/utility/ft_memcpy.c \
-	./sources/utility/getpass.c 
+	./sources/utility/getpass.c \
+	./sources/utility/args_to_value.c \
+	./sources/utility/des_utility.c
 SRC_FILE = $(notdir $(SRC))
 LIBPRINTF_DIRECTORY = ./libprintf/
 LIBPRINTF = ./libprintf/libftprintf.a

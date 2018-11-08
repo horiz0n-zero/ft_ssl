@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 14:03:48 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 17:39:15 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ struct							s_ssl
 # define FLAGS_O 128
 # define FLAGS_K 256
 # define FLAGS_V 512
+# define FLAGS_A 1024
 # define STATE_FILE 1
 
 	int							settings;
@@ -61,6 +62,7 @@ struct							s_ssl
 	int							stdin;
 	const char					*stdin_file;
 	int							stdout;
+	void						*required;
 };
 
 void							ssl_get_algo(t_ssl *const ssl,
@@ -88,8 +90,12 @@ void							read_stdin_print(t_ssl *const ssl);
 void							*read_stdin(t_ssl *const ssl);
 
 void							exit_flags(t_ssl *const ssl, const char c);
+void							exit_flags_string(t_ssl *const ssl,
+		const char *const src);
 void							exit_nostring(t_ssl *const ssl, const char c);
 void							exit_badcombination(t_ssl *const ssl);
+void							exit_nonhexa(t_ssl *const ssl, const char *src,
+		const char c);
 
 void							usage(t_ssl *const ssl);
 void							error_file(t_ssl *const ssl,
@@ -116,5 +122,7 @@ void							*ssl_input(t_ssl *const ssl,
 void							*ssl_file(t_ssl *const ssl,
 		const char *const file);
 char							*des_getpass(t_ssl *const ssl);
+void							des_hexa(const char *src, uint64_t *const value,
+		const int state);
 
 #endif

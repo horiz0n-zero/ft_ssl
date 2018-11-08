@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo_des.c                                         :+:      :+:    :+:   */
+/*   args_to_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/08 11:11:40 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 17:41:38 by afeuerst         ###   ########.fr       */
+/*   Created: 2018/11/08 15:07:05 by afeuerst          #+#    #+#             */
+/*   Updated: 2018/11/08 17:38:20 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "des.h"
+#include "ft_ssl.h"
 
-char						*algo_des(t_ssl *const ssl, const char *const src,
-		const size_t len)
+void			des_hexa(const char *src, uint64_t *const value,
+		const int state)
 {
-	struct s_des *const		des = ssl->required;
 
-	(void)des;
-	return ("des");
 }
