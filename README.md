@@ -26,20 +26,20 @@ ft_ssl base64 [-de] [-i input file] [-o output file]
 
 ft_ssl des|des-ecb|des-cbc [-dea] [-i input file] [-o output file] [-k key] [-p password] [-s salt] [v vector IV]
 
-	-a					Decode/encode the input/output in base64, depending on the encrypt mode
+	-a                  Decode/encode the input/output in base64, depending on the encrypt mode
 
-	-d					Decrypt mode
+	-d                  Decrypt mode
 
-	-e					Encrypt mode (default)
+	-e                  Encrypt mode (default)
 
-	-i input_file		Read input from input_file.  Default is stdin; passing - also represents stdin.
+	-i input_file       Read input from input_file.  Default is stdin; passing - also represents stdin.
 
-	-o output_file		Write output to output_file.  Default is stdout; passing - also represents stdout.
+	-o output_file      Write output to output_file.  Default is stdout; passing - also represents stdout.
 
-	-k key				Key in hexa
+	-k key              Key in hexa
 
-	-p password			Password in ascii
+	-p password         Password in ascii
 
-	-s salt				Salt in hexa
+	-s salt             Salt in hexa
 
-	-v vector			Initialization vector in hexa
+	-v vector           Initialization vector in hexa
