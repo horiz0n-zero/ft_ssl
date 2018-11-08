@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 10:00:07 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 10:02:41 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ struct							s_ssl
 # define FLAGS_E 32
 # define FLAGS_I 64
 # define FLAGS_O 128
-# define FLAGS_N 256
 # define STATE_FILE 1
 
 	const struct s_algo			*algo;
