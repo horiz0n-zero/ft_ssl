@@ -6,11 +6,10 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 09:55:52 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 10:03:15 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 11:01:39 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
 #include "base64.h"
 
 static const int	g_available_flags[256] =

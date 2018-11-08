@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 09:22:26 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 10:08:09 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 10:39:07 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,12 @@ void						decode_base64(unsigned char *dst,
 	{
 		if (src[i] == '=')
 			break ;
-		c = g_base64de[(int)src[i]];
+		if ((c = g_base64de[(int)src[i]]) == 255)
+		{
+			src++;
+			i -= 1;
+			continue ;
+		}
 		if ((i & 0x3) == 0)
 			*dst = (c << 2) & 0xFF;
 		else if ((i & 0x3) == 1)

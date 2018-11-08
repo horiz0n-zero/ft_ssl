@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 10:02:41 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 14:03:48 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ typedef struct					s_algo
 # define TYPE_DIGEST 2
 # define TYPE_CIPHER 4
 
-	int							pad;
+	int							settings;
+# define ECB 1
+# define CBC 2
+
 	void						(*verify)(t_ssl *const ssl, char **argv);
 	void						(*execute)(t_ssl *const ssl, int cflags);
 }								t_algo;
@@ -40,7 +43,6 @@ struct							s_ssl
 {
 	char						**argv;
 	int							flags;
-	int							pad;
 # define FLAGS_P 1
 # define FLAGS_Q 2
 # define FLAGS_R 4
@@ -49,8 +51,11 @@ struct							s_ssl
 # define FLAGS_E 32
 # define FLAGS_I 64
 # define FLAGS_O 128
+# define FLAGS_K 256
+# define FLAGS_V 512
 # define STATE_FILE 1
 
+	int							settings;
 	const struct s_algo			*algo;
 	size_t						source_lenght;
 	int							stdin;
@@ -67,11 +72,15 @@ char							*algo_sha256(t_ssl *const ssl,
 		const char *const src, const size_t len);
 char							*algo_base64(t_ssl *const ssl,
 		const char *const src, const size_t len);
+char							*algo_des(t_ssl *const ssl,
+		const char *const src, const size_t len);
 
 void							digest_execute(t_ssl *const ssl, int c_flags);
 void							digest_verify(t_ssl *const ssl, char **argv);
 void							base64_execute(t_ssl *const ssl, int c_flags);
 void							base64_verify(t_ssl *const ssl, char **argv);
+void							des_verify(t_ssl *const ssl, char **argv);
+void							des_execute(t_ssl *const ssl, int c_flags);
 
 void							print_checksum(t_ssl *const ssl,
 		const char *const src, const char *const name, const int isflagsp);
@@ -106,5 +115,6 @@ void							*ssl_input(t_ssl *const ssl,
 		const char *const file, const int fd);
 void							*ssl_file(t_ssl *const ssl,
 		const char *const file);
+char							*des_getpass(t_ssl *const ssl);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 14:29:24 by afeuerst          #+#    #+#              #
-#    Updated: 2018/11/08 09:19:30 by afeuerst         ###   ########.fr        #
+#    Updated: 2018/11/08 14:20:36 by afeuerst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRC = ./sources/ft_ssl.c \
 	./sources/algo/sha256_process.c \
 	./sources/algo/algo_base64.c \
 	./sources/algo/base64_decode.c \
+	./sources/cypher_des_verify_execute.c \
+	./sources/algo/algo_des.c \
 	./sources/utility/ft_strcomparable.c \
 	./sources/utility/ft_strlen.c \
 	./sources/utility/ft_strcmp.c \
@@ -34,7 +36,8 @@ SRC = ./sources/ft_ssl.c \
 	./sources/utility/read_stdin.c \
 	./sources/utility/ft_strndup.c \
 	./sources/utility/ft_strjoin.c \
-	./sources/utility/ft_memcpy.c
+	./sources/utility/ft_memcpy.c \
+	./sources/utility/getpass.c 
 SRC_FILE = $(notdir $(SRC))
 LIBPRINTF_DIRECTORY = ./libprintf/
 LIBPRINTF = ./libprintf/libftprintf.a
