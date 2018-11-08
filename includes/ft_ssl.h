@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/07 09:26:32 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 10:00:07 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct					s_algo
 	void						(*execute)(t_ssl *const ssl, int cflags);
 }								t_algo;
 
-typedef struct					s_ssl
+struct							s_ssl
 {
 	char						**argv;
 	int							flags;
@@ -57,15 +57,17 @@ typedef struct					s_ssl
 	int							stdin;
 	const char					*stdin_file;
 	int							stdout;
-}								t_ssl;
+};
 
 void							ssl_get_algo(t_ssl *const ssl,
 		const char *const type);
 
-
-char							*algo_md5(t_ssl *const ssl, const char *const src, const size_t len);
-char							*algo_sha256(t_ssl *const ssl, const char *const src, const size_t len);
-char							*algo_base64(t_ssl *const ssl, const char *const src, const size_t len);
+char							*algo_md5(t_ssl *const ssl,
+		const char *const src, const size_t len);
+char							*algo_sha256(t_ssl *const ssl,
+		const char *const src, const size_t len);
+char							*algo_base64(t_ssl *const ssl,
+		const char *const src, const size_t len);
 
 void							digest_execute(t_ssl *const ssl, int c_flags);
 void							digest_verify(t_ssl *const ssl, char **argv);
@@ -97,12 +99,13 @@ int								ft_strcmp(register const char *s1,
 		register const char *s2);
 void							ft_memcpy(void *dst, const void *src, size_t n);
 void							ft_memset(char *dst, unsigned long len);
-void							ssl_input_print(t_ssl *const ssl, const char *const file,
-		const int fd);
-void							ssl_file_print(t_ssl *const ssl, const char *const file);
-
-void							*ssl_input(t_ssl *const ssl, const char *const file,
-		const int fd);
-void							*ssl_file(t_ssl *const ssl, const char *const file);
+void							ssl_input_print(t_ssl *const ssl,
+		const char *const file, const int fd);
+void							ssl_file_print(t_ssl *const ssl,
+		const char *const file);
+void							*ssl_input(t_ssl *const ssl,
+		const char *const file, const int fd);
+void							*ssl_file(t_ssl *const ssl,
+		const char *const file);
 
 #endif

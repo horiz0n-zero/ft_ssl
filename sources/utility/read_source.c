@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:06:22 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 16:44:38 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/08 09:41:12 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void					*ssl_file(t_ssl *const ssl, const char *const file)
 	return (content);
 }
 
-void					ssl_input_print(t_ssl *const ssl, const char *const file,
-		const int fd)
+void					ssl_input_print(t_ssl *const ssl,
+		const char *const file, const int fd)
 {
 	struct stat			info;
 	char				*content;

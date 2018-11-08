@@ -6,7 +6,7 @@
 #    By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 14:29:24 by afeuerst          #+#    #+#              #
-#    Updated: 2018/11/07 14:03:00 by afeuerst         ###   ########.fr        #
+#    Updated: 2018/11/08 09:19:30 by afeuerst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = ./sources/ft_ssl.c \
 	./sources/algo/algo_sha256.c \
 	./sources/algo/sha256_process.c \
 	./sources/algo/algo_base64.c \
+	./sources/algo/base64_decode.c \
 	./sources/utility/ft_strcomparable.c \
 	./sources/utility/ft_strlen.c \
 	./sources/utility/ft_strcmp.c \
