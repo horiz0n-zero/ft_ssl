@@ -45,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(SRC) $(INCLUDES)
 	@make -C $(LIBPRINTF_DIRECTORY)
-	@echo $(SRC_FILE) | xargs -I @ -n 1 $(PRINT) "[ source ]" @ &
+	@echo $(SRC_FILE) | xargs -I @ -n 1 $(PRINT) "source >" @ &
 	@clang -I $(LIBINCLUDES) -I $(INCLUDES) $(LIBPRINTF) $(SRC) $(FLAGS) -o $(NAME)
 	@printf "\e[38;5;46m%s is now available !\n\e[0;37m" $(NAME)
 

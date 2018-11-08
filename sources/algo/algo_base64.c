@@ -78,14 +78,20 @@ static int              decodable_base64(const char *src, size_t len)
 {
     if (len < 4)
     {
+        if (!(*src == '=' && (*src >= 'a' && *src <= 'z') ||
+			(*src >= 'A' && *src <= 'Z') ||
+			(*src >= '0' && *src <= '9') ||
+			*src == '+' || *src == '/'))
+            return (1);
         *(char*)src = '=';
         return (0);
     }
     while (len--)
     {
-        if (*src < 0)
-            return (1);
-        if (g_base64de[(int)*src++] == 255)
+        if (!((*src >= 'a' && *src <= 'z') ||
+			(*src >= 'A' && *src <= 'Z') ||
+			(*src >= '0' && *src <= '9') ||
+			*src == '+' || *src == '/'))
             return (1);
     }
     return (0);
