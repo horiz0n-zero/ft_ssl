@@ -12,8 +12,29 @@
 
 #include "ft_ssl.h"
 
-void			des_hexa(const char *src, uint64_t *const value,
-		const int state)
+static inline void              src_upper(char *src)
 {
+    while (*src)
+    {
+        if (*src >= 'a' && *src <= 'z')
+            *src = 'A' + (*src - 'a');
+        src++;
+    }
+}
 
+void		                	des_hexa(const char *src, uint64_t *const value)
+{
+    const uint64_t              size = 16 - (uint64_t)ft_strlen(src);
+
+    *value = 0;
+    src_upper((char*)src);
+    while (*src)
+    {
+        *value += ((*src >= 'A') ?
+            (uint64_t)*src - 'A' + 0xa :
+            (uint64_t)*src - '0');
+        if (*++src)
+            *value *= 16;
+    }
+    *value <<= size * 4;
 }

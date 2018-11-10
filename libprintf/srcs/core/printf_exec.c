@@ -29,7 +29,8 @@ static const t_lenght_func		g_functions_lenght[] =
 	[PRINT_X] = lenght_hexa,
 	[PRINT_XX] = lenght_hexa,
 	[PRINT_C] = lenght_percent,
-	[PRINT_CC] = lenght_unicode
+	[PRINT_CC] = lenght_unicode,
+    [PRINT_B] = lenght_binary
 };
 
 static const t_transform_func	g_functions_transform[] =
@@ -49,7 +50,8 @@ static const t_transform_func	g_functions_transform[] =
 	[PRINT_X] = transform_hexa_lower,
 	[PRINT_XX] = transform_hexa_upper,
 	[PRINT_C] = transform_char,
-	[PRINT_CC] = transform_unicode
+	[PRINT_CC] = transform_unicode,
+    [PRINT_B] = transform_binary
 };
 
 static void						printf_calculate(t_printinfo *const info,

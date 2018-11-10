@@ -122,7 +122,6 @@ void							*ssl_input(t_ssl *const ssl,
 void							*ssl_file(t_ssl *const ssl,
 		const char *const file);
 char							*des_getpass(t_ssl *const ssl);
-void							des_hexa(const char *src, uint64_t *const value,
-		const int state);
+void							des_hexa(const char *src, uint64_t *const value);
 
 #endif

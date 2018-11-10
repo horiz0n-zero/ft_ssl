@@ -29,7 +29,8 @@ static const uint32_t	g_conversion[256] =
 	['x'] = PRINT_X,
 	['X'] = PRINT_XX,
 	['c'] = PRINT_C,
-	['C'] = PRINT_CC
+	['C'] = PRINT_CC,
+    ['b'] = PRINT_B
 };
 
 static const uint32_t	g_flags[256] =

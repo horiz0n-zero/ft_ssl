@@ -73,6 +73,7 @@ struct						s_printinfo
 # define PRINT_XX 13
 # define PRINT_C 14
 # define PRINT_CC 15
+# define PRINT_B 16
 
 void						printf_exec(const char *const src,
 		t_printinfo *const info, t_printdata **next);
@@ -108,6 +109,8 @@ void						lenght_unicode(t_printdata *data,
 		va_list *args);
 void						lenght_unicode_string(t_printdata *data,
 		va_list *args);
+void                        lenght_binary(t_printdata *data,
+        va_list *args);
 
 typedef void				(*t_transform_func)(t_printdata *data,
 		char *dst);
@@ -135,6 +138,8 @@ void						transform_octal(t_printdata *data,
 		char *dst);
 void						transform_char(t_printdata *data,
 		char *dst);
+void                        transform_binary(t_printdata *data,
+        char *dst);
 
 uint32_t					atoi_print(uint64_t *const value,
 		const char *const src, uint32_t index);
