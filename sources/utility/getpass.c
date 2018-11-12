@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-char				*des_getpass(t_ssl *const ssl)
+char				*des_getpass(void)
 {
 	char			*pass;
 	char			*conf;
@@ -30,7 +30,7 @@ char				*des_getpass(t_ssl *const ssl)
 	{
 		ft_printf("Verify failure\n");
 		free(pass);
-		return (des_getpass(ssl));
+		return (des_getpass());
 	}
 	return (pass);
 }

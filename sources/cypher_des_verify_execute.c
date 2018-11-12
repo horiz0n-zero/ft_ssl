@@ -61,10 +61,19 @@ static void         des_io(t_ssl *const ssl, const char *const file,
 	}
 }
 
+static void         execute(t_ssl *const ssl, t_des *const des)
+{
+
+    if (ssl->stdin != STDIN_FILENO)
+        close(ssl->stdin);
+    if (ssl->stdout != STDOUT_FILENO)
+        close(ssl->stdout);
+}
+
 void				des_execute(t_ssl *const ssl, int c_flags)
 {
 	t_des			des;
-    int             state;
+    int             state; // replace c_flags
 
 	ssl->required = &des;
     while (*ssl->argv && **ssl->argv == '-')
@@ -81,6 +90,9 @@ void				des_execute(t_ssl *const ssl, int c_flags)
         else if (state & FLAGS_V)
             des_hexa(*ssl->argv++, &des.vector);
     }
+    if (!(ssl->flags & (FLAGS_P & FLAGS_K))
+        des_getpass(); // pk machin
+    execute(ssl, &des);
 }
 
 void				des_verify(t_ssl *const ssl, char **argv)
