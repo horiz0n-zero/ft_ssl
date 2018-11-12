@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 17:39:15 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/12 09:42:05 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void							*ssl_input(t_ssl *const ssl,
 		const char *const file, const int fd);
 void							*ssl_file(t_ssl *const ssl,
 		const char *const file);
-char							*des_getpass(void);
+char							*des_getpass(t_ssl *const ssl);
+uint64_t						des_randomkey(void);
 void							des_hexa(const char *src, uint64_t *const value);
 
 #endif

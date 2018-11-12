@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:10 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 14:53:53 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/12 11:31:35 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 
 typedef struct			s_des
 {
-	uint64_t			password;
+	uint64_t			key;
 	uint64_t			salt;
 	uint64_t			vector;
 }						t_des;
+
+uint64_t				des_pbkdf(const uint8_t *pass, uint64_t salt, int itr);
 
 #endif

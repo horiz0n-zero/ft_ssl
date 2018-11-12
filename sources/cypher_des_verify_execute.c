@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 17:42:58 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/12 11:31:37 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static const int	g_available_flags[256] =
 	['V'] = FLAGS_V
 };
 
-static void         des_io(t_ssl *const ssl, const char *const file,
-    const int state)
+static void			des_io(t_ssl *const ssl, const char *const file,
+		const int state)
 {
 	int				fd;
 
@@ -61,38 +61,41 @@ static void         des_io(t_ssl *const ssl, const char *const file,
 	}
 }
 
-static void         execute(t_ssl *const ssl, t_des *const des)
+static void			execute(t_ssl *const ssl, t_des *const des)
 {
-
-    if (ssl->stdin != STDIN_FILENO)
-        close(ssl->stdin);
-    if (ssl->stdout != STDOUT_FILENO)
-        close(ssl->stdout);
+	if (!(ssl->flags & FLAGS_S))
+		des->salt = des_randomkey();
+	// calculate iv
+	ft_printf("key : %llx\nsalt : %llx\nvector: %llx\n", des->key, des->salt, des->vector);
+	if (ssl->stdin != STDIN_FILENO)
+		close(ssl->stdin);
+	if (ssl->stdout != STDOUT_FILENO)
+		close(ssl->stdout);
 }
 
 void				des_execute(t_ssl *const ssl, int c_flags)
 {
 	t_des			des;
-    int             state; // replace c_flags
+	int				state;
 
 	ssl->required = &des;
-    while (*ssl->argv && **ssl->argv == '-')
-    {
-        state = g_available_flags[(int)*((*ssl->argv++) + 1)];
-        if (state & (FLAGS_I | FLAGS_O))
-            des_io(ssl, *ssl->argv++, state);
-        else if (state & FLAGS_P)
-            ; // loulou
-        else if (state & FLAGS_K)
-            des_hexa(*ssl->argv++, &des.password);
-        else if (state & FLAGS_S)
-            des_hexa(*ssl->argv++, &des.salt);
-        else if (state & FLAGS_V)
-            des_hexa(*ssl->argv++, &des.vector);
-    }
-    if (!(ssl->flags & (FLAGS_P & FLAGS_K))
-        des_getpass(); // pk machin
-    execute(ssl, &des);
+	while (*ssl->argv && **ssl->argv == '-')
+	{
+		state = g_available_flags[(int)*((*ssl->argv++) + 1)];
+		if (state & (FLAGS_I | FLAGS_O))
+			des_io(ssl, *ssl->argv++, state);
+		else if (state & FLAGS_P)
+			; // loulou
+		else if (state & FLAGS_K)
+			des_hexa(*ssl->argv++, &des.key);
+		else if (state & FLAGS_S)
+			des_hexa(*ssl->argv++, &des.salt);
+		else if (state & FLAGS_V)
+			des_hexa(*ssl->argv++, &des.vector);
+	}
+	if (!(ssl->flags & (FLAGS_P | FLAGS_K)))
+			des_getpass(ssl); // pk machin
+	execute(ssl, &des);
 }
 
 void				des_verify(t_ssl *const ssl, char **argv)
@@ -111,7 +114,7 @@ void				des_verify(t_ssl *const ssl, char **argv)
 		else if (*(tmp + 1))
 			exit_flags_string(ssl, tmp - 1);
 		else if ((state & (FLAGS_I | FLAGS_O | FLAGS_P)) && !*argv++)
-			exit_nostring(ssl, *tmp);
+				exit_nostring(ssl, *tmp);
 		else if (state & (FLAGS_K | FLAGS_S | FLAGS_V))
 		{
 			if (!*argv)
