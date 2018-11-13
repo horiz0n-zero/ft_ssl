@@ -70,6 +70,8 @@ void							ssl_get_algo(t_ssl *const ssl,
 
 char							*algo_md5(t_ssl *const ssl,
 		const char *const src, const size_t len);
+void                            *algo_md5_raw(const char *const src,
+        const size_t len);
 char							*algo_sha256(t_ssl *const ssl,
 		const char *const src, const size_t len);
 char							*algo_base64(t_ssl *const ssl,
@@ -97,6 +99,7 @@ void							exit_badcombination(t_ssl *const ssl);
 void							exit_nonhexa(t_ssl *const ssl, const char *src,
 		const char c);
 
+void                            exit_custom(const char *const err);
 void							usage(t_ssl *const ssl);
 void							error_file(t_ssl *const ssl,
 		const char *const file);

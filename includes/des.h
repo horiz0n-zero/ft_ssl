@@ -17,11 +17,13 @@
 
 typedef struct			s_des
 {
+    const char          *password;
 	uint64_t			key;
 	uint64_t			salt;
 	uint64_t			vector;
 }						t_des;
 
-uint64_t				des_pbkdf(const uint8_t *pass, uint64_t salt, int itr);
+void    				des_pbkdf(t_des *const des,
+                            const void *const pass, uint64_t salt);
 
 #endif

@@ -63,9 +63,10 @@ static void			des_io(t_ssl *const ssl, const char *const file,
 
 static void			execute(t_ssl *const ssl, t_des *const des)
 {
-	if (!(ssl->flags & FLAGS_S))
-		des->salt = des_randomkey();
-	// calculate iv
+	if (!(ssl->flags & FLAGS_K))
+        des_pbkdf(des, des->password, des->salt);
+    else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
+        exit_custom("ft_ssl: Error: you must provide IV.\n");
 	ft_printf("key : %llx\nsalt : %llx\nvector: %llx\n", des->key, des->salt, des->vector);
 	if (ssl->stdin != STDIN_FILENO)
 		close(ssl->stdin);
@@ -85,7 +86,7 @@ void				des_execute(t_ssl *const ssl, int c_flags)
 		if (state & (FLAGS_I | FLAGS_O))
 			des_io(ssl, *ssl->argv++, state);
 		else if (state & FLAGS_P)
-			; // loulou
+			des.password = *ssl->argv++;
 		else if (state & FLAGS_K)
 			des_hexa(*ssl->argv++, &des.key);
 		else if (state & FLAGS_S)
@@ -93,8 +94,10 @@ void				des_execute(t_ssl *const ssl, int c_flags)
 		else if (state & FLAGS_V)
 			des_hexa(*ssl->argv++, &des.vector);
 	}
+    if (!(ssl->flags & FLAGS_S))
+        des.salt = des_randomkey();
 	if (!(ssl->flags & (FLAGS_P | FLAGS_K)))
-			des_getpass(ssl); // pk machin
+		des.password = des_getpass(ssl);
 	execute(ssl, &des);
 }
 

@@ -1,0 +1,12 @@
+# define PBKDF_SALT_SIZE 16
+# define PBKDF_ALGO execute_md5
+# define PBKDF_ALGO_OUTPUT_LEN 32
+# define PBKDF_SALT ssl->user_salt
+# define PBKDF_PASSWORD ssl->user_password
+# define PBKDF_PASSWORD_SIZE 32
+# define PBKDF_PS PBKDF_PASSWORD_SIZE
+# define PBKDF_ITERATIONS 1
+# define PBKDF_KEY_LEN 16
+# define PBKDF_VECTOR_SIZE 16
+
+

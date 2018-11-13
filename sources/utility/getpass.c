@@ -10,14 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "des.h"
 
-uint64_t			des_pbkdf(const char *pass, uint64_t salt, int itr)
+void	    		des_pbkdf(t_des *const des,
+    const void *const pass, uint64_t salt)
 {
 	const size_t	len = ft_strlen(pass);
-	uint64_t		value;
+    void            *buffer;
+    void            *ptr;
 
-	return (value);
+    buffer = __builtin_alloca(len + sizeof(uint64_t));
+    ft_memcpy(buffer, pass, len);
+    ft_memcpy(buffer + len, &salt, sizeof(uint64_t));
+    ptr = algo_md5_raw(buffer, len + sizeof(uint64_t));
+    ptr = algo_md5_raw(ptr, 16);
+    ft_printf("%llx %llx (%s, %llu)\n", ((uint64_t*)ptr)[0], ((uint64_t*)ptr)[1], pass, salt);
+    des->key = ((uint64_t*)ptr)[0];
+    des->vector = ((uint64_t*)ptr)[1];
 }
 
 uint64_t			des_randomkey(void)

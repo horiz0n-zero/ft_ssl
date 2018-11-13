@@ -14,6 +14,12 @@
 #include <errno.h>
 #include <string.h>
 
+void                    exit_custom(const char *const err)
+{
+    write(STDERR_FILENO, err, ft_strlen(err));
+    exit(EXIT_FAILURE);
+}
+
 void					error_file(t_ssl *const ssl, const char *const file)
 {
 	const char *const	err = strerror(errno);

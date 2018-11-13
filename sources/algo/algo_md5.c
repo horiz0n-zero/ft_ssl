@@ -57,6 +57,24 @@ static char				*printable_digest(const unsigned char *const digest)
 	return (printable);
 }
 
+void                    *algo_md5_raw(const char *const src,
+    const size_t len)
+{
+   	struct s_md5		md5;
+	static char			digest[16];
+
+	md5.a = 0x67452301;
+	md5.b = 0xefcdab89;
+	md5.c = 0x98badcfe;
+	md5.d = 0x10325476;
+	md5_update(&md5, src, len);
+	((t_md5value*)digest)[0] = md5.a;
+	((t_md5value*)digest)[1] = md5.b;
+	((t_md5value*)digest)[2] = md5.c;
+	((t_md5value*)digest)[3] = md5.d;
+	return (digest);
+}
+
 char					*algo_md5(t_ssl *const ssl,
 		const char *const src, const size_t len)
 {
