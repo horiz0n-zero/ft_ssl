@@ -26,6 +26,8 @@ SRC = ./sources/ft_ssl.c \
 	./sources/algo/base64_decode.c \
 	./sources/cypher_des_verify_execute.c \
 	./sources/algo/algo_des.c \
+    ./sources/algo/des_process.c \
+    ./sources/algo/des_f.c \
 	./sources/utility/ft_strcomparable.c \
 	./sources/utility/ft_strlen.c \
 	./sources/utility/ft_strcmp.c \

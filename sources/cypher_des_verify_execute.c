@@ -63,11 +63,22 @@ static void			des_io(t_ssl *const ssl, const char *const file,
 
 static void			execute(t_ssl *const ssl, t_des *const des)
 {
+    void            *ptr;
+    void            *result;
+
 	if (!(ssl->flags & FLAGS_K))
         des_pbkdf(des, des->password, des->salt);
     else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
         exit_custom("ft_ssl: Error: you must provide IV.\n");
-	ft_printf("key : %llx\nsalt : %llx\nvector: %llx\n", des->key, des->salt, des->vector);
+    ft_printf("key : %llx\nsalt : %llx\nvector: %llx\n", des->key, des->salt, des->vector);
+    if (ssl->stdin == STDIN_FILENO)
+        ptr = read_stdin(ssl);
+    else
+        ptr = ssl_input(ssl, ssl->stdin_file, ssl->stdin);
+    if (!ptr)
+        return ;
+    result = ssl->algo->checksum(ssl, ptr, ssl->source_lenght);
+    write(ssl->stdout, result, ft_strlen(result));
 	if (ssl->stdin != STDIN_FILENO)
 		close(ssl->stdin);
 	if (ssl->stdout != STDOUT_FILENO)
