@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 10:40:18 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 16:33:35 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,7 @@ char							*des_getpass(t_ssl *const ssl);
 uint64_t						des_randomkey(void);
 void							des_hexa(const char *src,
 		uint64_t *const value);
+int								ft_cinstr(const char *src, const char c);
+char							*ft_strsub(const char *src);
 
 #endif

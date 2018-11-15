@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:10 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 10:41:59 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 14:13:27 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ uint64_t				des_process(t_des *const des,
 		uint64_t block, const int decrypt);
 uint32_t				des_f(const uint32_t r,
 		const uint64_t k);
+
+void					des_block_ciphers(t_ssl *const ssl,
+		void *const src, size_t len);
 
 # define LB32_MASK 0x00000001
 # define LB64_MASK 0x0000000000000001

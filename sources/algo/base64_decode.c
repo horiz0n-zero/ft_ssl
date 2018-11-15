@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 09:22:26 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 10:43:12 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 16:57:55 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,36 @@ static const unsigned char	g_base64de[] =
 
 int							decodable_base64(const char *src, size_t len)
 {
-	if (len < 4)
-	{
-		if (!((*src == '=') || (*src >= 'a' && *src <= 'z') ||
-				(*src >= 'A' && *src <= 'Z') ||
-				(*src >= '0' && *src <= '9') ||
-				*src == '+' || *src == '/'))
-			return (1);
-		*(char*)src = '=';
-		return (0);
-	}
+	size_t					real;
+
+	real = 0;
 	while (len--)
 	{
-		if (!((*src >= 'a' && *src <= 'z') ||
-				(*src >= 'A' && *src <= 'Z') ||
-				(*src >= '0' && *src <= '9') ||
-				*src == '+' || *src == '/'))
+		if (ft_cinstr(WHITE_SPACE, *src))
+		{
+			src++;
+			continue ;
+		}
+		if (!ft_cinstr(BASE64, *src++))
 			return (1);
+		real++;
 	}
+	if (real < 4)
+		*((char*)src) = '=';
 	return (0);
 }
 
 void						decode_base64(unsigned char *dst,
-		const unsigned char *src, const size_t len, unsigned char c)
+		const unsigned char *src, size_t len, unsigned char c)
 {
 	unsigned int			i;
 
 	i = -1;
-	while (++i < (unsigned int)len)
+	while (++i < (unsigned int)len && src[i] != '=')
 	{
-		if (src[i] == '=')
-			break ;
-		if ((c = g_base64de[(int)src[i]]) == 255)
+		if (ft_cinstr(WHITE_SPACE, src[i]) /*c = g_base64de[(int)src[i]]) == 255*/ && src++)
 		{
-			src++;
-			i -= 1;
+			len--;
 			continue ;
 		}
 		if ((i & 0x3) == 0)

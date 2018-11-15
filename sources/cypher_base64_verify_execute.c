@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 09:55:52 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 16:08:14 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 16:35:20 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void				base64_execute(t_ssl *const ssl, int c_flags)
 		return ;
 	result = ssl->algo->checksum(ssl, ptr, ssl->source_lenght);
 	write(ssl->stdout, result, ft_strlen(result));
+	if (!(ssl->flags & FLAGS_D))
+		write(ssl->stdout, "\n", 1);
 	free(ptr);
-	if (ft_strcmp(result, INVALID))
-		free(result);
+	free(result);
 	if (ssl->stdout != STDOUT_FILENO)
 		close(ssl->stdout);
 	if (ssl->stdin != STDIN_FILENO)

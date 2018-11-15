@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:11:40 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 09:50:50 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 15:24:06 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,43 @@ static void					subkeys_calculation(t_des *const des,
 	}
 }
 
+static void					*des_padding(const char *const src,
+		const size_t len, const int decrypt)
+{
+	void *const				ptr = malloc(len + sizeof(uint64_t) + 1);
+	size_t					padding;
+
+	(void)decrypt;
+	padding = 0;
+	ft_memset(ptr, len + sizeof(uint64_t) + 1);
+	return (ptr);
+}
+
 char						*algo_des(t_ssl *const ssl, const char *const src,
 		const size_t len)
 {
 	struct s_des *const		des = ssl->required;
+	void					*proc;
+	void					*tmp;
+	const int				decrypt = ssl->flags & FLAGS_D ? 1 : 0;
 
 	subkeys_calculation(des, des->key);
-	return ("des");
+	if (ssl->flags & FLAGS_A && decrypt && (tmp = algo_base64(ssl, src, len)))
+	{
+		proc = des_padding(tmp, ssl->source_lenght, decrypt); // ssl->source_lenght ???
+		des_block_ciphers(ssl, proc, ssl->source_lenght);
+		free(tmp);
+	}
+	else
+	{
+		proc = des_padding(src, ssl->source_lenght, decrypt);
+		des_block_ciphers(ssl, proc, ssl->source_lenght);
+	}
+	if (ssl->flags & FLAGS_A && !decrypt)
+	{
+		tmp = algo_base64(ssl, proc, ssl->source_lenght);
+		free(proc);
+		return (tmp);
+	}
+	return (proc);
 }

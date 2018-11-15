@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:31:52 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 10:25:03 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 16:35:07 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void				encode_base64(char *dst, const unsigned char *src,
 		*dst++ = '=';
 		*dst++ = '=';
 	}
-	*dst++ = '\n';
 	*dst = 0;
 }
 
@@ -63,7 +62,10 @@ char					*algo_base64(t_ssl *const ssl,
 	if (ssl->flags & FLAGS_D)
 	{
 		if (decodable_base64(src, len))
-			return (INVALID);
+		{
+			write(STDERR_FILENO, INVALID, sizeof(INVALID));
+			return (ft_strsub(""));
+		}
 		ptr = malloc(((len * 8) / 6) + 1);
 		decode_base64(ptr, (const void*)src, len, 0);
 	}
@@ -76,5 +78,6 @@ char					*algo_base64(t_ssl *const ssl,
 			ptr = malloc(lenght + 2);
 		encode_base64(ptr, (const void*)src, len);
 	}
+	ssl->source_lenght = ft_strlen(ptr);
 	return (ptr);
 }
