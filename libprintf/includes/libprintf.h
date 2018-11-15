@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:37:02 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 12:06:49 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:20:11 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void						lenght_unicode(t_printdata *data,
 		va_list *args);
 void						lenght_unicode_string(t_printdata *data,
 		va_list *args);
-void                        lenght_binary(t_printdata *data,
-        va_list *args);
+void						lenght_binary(t_printdata *data,
+		va_list *args);
 
 typedef void				(*t_transform_func)(t_printdata *data,
 		char *dst);
@@ -138,8 +138,8 @@ void						transform_octal(t_printdata *data,
 		char *dst);
 void						transform_char(t_printdata *data,
 		char *dst);
-void                        transform_binary(t_printdata *data,
-        char *dst);
+void						transform_binary(t_printdata *data,
+		char *dst);
 
 uint32_t					atoi_print(uint64_t *const value,
 		const char *const src, uint32_t index);

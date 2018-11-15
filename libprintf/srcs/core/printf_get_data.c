@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:57:16 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 10:58:59 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:38:08 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static const uint32_t	g_conversion[256] =
 	['X'] = PRINT_XX,
 	['c'] = PRINT_C,
 	['C'] = PRINT_CC,
-    ['b'] = PRINT_B
+	['b'] = PRINT_B
 };
 
 static const uint32_t	g_flags[256] =

@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/12 11:31:37 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 09:59:14 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ static void			des_io(t_ssl *const ssl, const char *const file,
 
 static void			execute(t_ssl *const ssl, t_des *const des)
 {
-    void            *ptr;
-    void            *result;
+	void			*ptr;
+	void			*result;
 
 	if (!(ssl->flags & FLAGS_K))
-        des_pbkdf(des, des->password, des->salt);
-    else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
-        exit_custom("ft_ssl: Error: you must provide IV.\n");
-    ft_printf("key : %llx\nsalt : %llx\nvector: %llx\n", des->key, des->salt, des->vector);
-    if (ssl->stdin == STDIN_FILENO)
-        ptr = read_stdin(ssl);
-    else
-        ptr = ssl_input(ssl, ssl->stdin_file, ssl->stdin);
-    if (!ptr)
-        return ;
-    result = ssl->algo->checksum(ssl, ptr, ssl->source_lenght);
-    write(ssl->stdout, result, ft_strlen(result));
+		es_pbkdf(des, des->password, des->salt);
+	else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
+		exit_custom("ft_ssl: Error: you must provide IV.\n");
+	ft_printf("key : %llx\nsalt : %llx\nvector: %llx\n", des->key, des->salt, des->vector);
+	if (ssl->stdin == STDIN_FILENO)
+		ptr = read_stdin(ssl);
+	else
+		ptr = ssl_input(ssl, ssl->stdin_file, ssl->stdin);
+	if (!ptr)
+		return ;
+	result = ssl->algo->checksum(ssl, ptr, ssl->source_lenght);
+	write(ssl->stdout, result, ft_strlen(result));
 	if (ssl->stdin != STDIN_FILENO)
 		close(ssl->stdin);
 	if (ssl->stdout != STDOUT_FILENO)
@@ -105,8 +105,8 @@ void				des_execute(t_ssl *const ssl, int c_flags)
 		else if (state & FLAGS_V)
 			des_hexa(*ssl->argv++, &des.vector);
 	}
-    if (!(ssl->flags & FLAGS_S))
-        des.salt = des_randomkey();
+	if (!(ssl->flags & FLAGS_S))
+		des.salt = des_randomkey();
 	if (!(ssl->flags & (FLAGS_P | FLAGS_K)))
 		des.password = des_getpass(ssl);
 	execute(ssl, &des);
@@ -128,7 +128,7 @@ void				des_verify(t_ssl *const ssl, char **argv)
 		else if (*(tmp + 1))
 			exit_flags_string(ssl, tmp - 1);
 		else if ((state & (FLAGS_I | FLAGS_O | FLAGS_P)) && !*argv++)
-				exit_nostring(ssl, *tmp);
+			exit_nostring(ssl, *tmp);
 		else if (state & (FLAGS_K | FLAGS_S | FLAGS_V))
 		{
 			if (!*argv)

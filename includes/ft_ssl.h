@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/12 09:42:05 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:40:18 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void							ssl_get_algo(t_ssl *const ssl,
 
 char							*algo_md5(t_ssl *const ssl,
 		const char *const src, const size_t len);
-void                            *algo_md5_raw(const char *const src,
-        const size_t len);
+void							*algo_md5_raw(const char *const src,
+		const size_t len);
 char							*algo_sha256(t_ssl *const ssl,
 		const char *const src, const size_t len);
 char							*algo_base64(t_ssl *const ssl,
@@ -99,7 +99,7 @@ void							exit_badcombination(t_ssl *const ssl);
 void							exit_nonhexa(t_ssl *const ssl, const char *src,
 		const char c);
 
-void                            exit_custom(const char *const err);
+void							exit_custom(const char *const err);
 void							usage(t_ssl *const ssl);
 void							error_file(t_ssl *const ssl,
 		const char *const file);
@@ -126,6 +126,7 @@ void							*ssl_file(t_ssl *const ssl,
 		const char *const file);
 char							*des_getpass(t_ssl *const ssl);
 uint64_t						des_randomkey(void);
-void							des_hexa(const char *src, uint64_t *const value);
+void							des_hexa(const char *src,
+		uint64_t *const value);
 
 #endif

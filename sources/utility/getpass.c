@@ -6,27 +6,28 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 13:45:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/12 11:05:52 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:00:29 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "des.h"
 
-void	    		des_pbkdf(t_des *const des,
-    const void *const pass, uint64_t salt)
+void				des_pbkdf(t_des *const des,
+		const void *const pass, uint64_t salt)
 {
 	const size_t	len = ft_strlen(pass);
-    void            *buffer;
-    void            *ptr;
+	void			*buffer;
+	void			*ptr;
 
-    buffer = __builtin_alloca(len + sizeof(uint64_t));
-    ft_memcpy(buffer, pass, len);
-    ft_memcpy(buffer + len, &salt, sizeof(uint64_t));
-    ptr = algo_md5_raw(buffer, len + sizeof(uint64_t));
-    ptr = algo_md5_raw(ptr, 16);
-    ft_printf("%llx %llx (%s, %llu)\n", ((uint64_t*)ptr)[0], ((uint64_t*)ptr)[1], pass, salt);
-    des->key = ((uint64_t*)ptr)[0];
-    des->vector = ((uint64_t*)ptr)[1];
+	buffer = __builtin_alloca(len + sizeof(uint64_t));
+	ft_memcpy(buffer, pass, len);
+	ft_memcpy(buffer + len, &salt, sizeof(uint64_t));
+	ptr = algo_md5_raw(buffer, len + sizeof(uint64_t));
+	ptr = algo_md5_raw(ptr, 16);
+	ft_printf("%llx %llx (%s, %llu)\n", ((uint64_t*)ptr)[0], ((uint64_t*)ptr)[1],
+			pass, salt);
+	des->key = ((uint64_t*)ptr)[0];
+	des->vector = ((uint64_t*)ptr)[1];
 }
 
 uint64_t			des_randomkey(void)

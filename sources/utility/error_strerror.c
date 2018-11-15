@@ -6,18 +6,17 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 15:46:51 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/08 09:40:52 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:01:49 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include <errno.h>
-#include <string.h>
 
-void                    exit_custom(const char *const err)
+void					exit_custom(const char *const err)
 {
-    write(STDERR_FILENO, err, ft_strlen(err));
-    exit(EXIT_FAILURE);
+	write(STDERR_FILENO, err, ft_strlen(err));
+	exit(EXIT_FAILURE);
 }
 
 void					error_file(t_ssl *const ssl, const char *const file)

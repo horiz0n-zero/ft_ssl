@@ -6,11 +6,10 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:36:21 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 13:31:42 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:43:05 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
 #include "md5.h"
 
 static void				md5_update(t_md5 *const md5, const char *src,
@@ -57,10 +56,10 @@ static char				*printable_digest(const unsigned char *const digest)
 	return (printable);
 }
 
-void                    *algo_md5_raw(const char *const src,
-    const size_t len)
+void					*algo_md5_raw(const char *const src,
+		const size_t len)
 {
-   	struct s_md5		md5;
+	struct s_md5		md5;
 	static char			digest[16];
 
 	md5.a = 0x67452301;
