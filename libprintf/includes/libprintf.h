@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:37:02 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 10:20:11 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 09:45:33 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 int							ft_printf(const char *format, ...);
 int							ft_fprintf(const int fd, const char *format, ...);
+int							ft_pprintf(const char *const path,
+		const char *format, ...);
 
 typedef struct s_printdata	t_printdata;
 
