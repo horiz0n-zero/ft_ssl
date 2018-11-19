@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 10:16:26 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/04 15:38:55 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:40:21 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,25 @@ static const uint32_t		g_round_constants[] =
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
+
+void						sha256_update(t_sha256 *const sha,
+		uint8_t *const data, const size_t length)
+{
+	size_t					i;
+
+	i = 0;
+	while (i < length)
+	{
+		sha->data[sha->data_length++] = data[i];
+		if (sha->data_length == 64)
+		{
+			sha256_transform(sha, sha->data);
+			sha->bit_length += 512;
+			sha->data_length = 0;
+		}
+		i++;
+	}
+}
 
 static inline void			sha256_addsum(t_sha256 *const sha)
 {

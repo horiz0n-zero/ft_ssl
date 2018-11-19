@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 16:33:35 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:41:21 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char							*algo_md5(t_ssl *const ssl,
 void							*algo_md5_raw(const char *const src,
 		const size_t len);
 char							*algo_sha256(t_ssl *const ssl,
+		const char *const src, const size_t len);
+char							*algo_sha256_raw(t_ssl *const ssl,
 		const char *const src, const size_t len);
 char							*algo_base64(t_ssl *const ssl,
 		const char *const src, const size_t len);

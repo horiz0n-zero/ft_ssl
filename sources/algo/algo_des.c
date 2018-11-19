@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:11:40 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 15:24:06 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:51:15 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char						*algo_des(t_ssl *const ssl, const char *const src,
 	subkeys_calculation(des, des->key);
 	if (ssl->flags & FLAGS_A && decrypt && (tmp = algo_base64(ssl, src, len)))
 	{
-		proc = des_padding(tmp, ssl->source_lenght, decrypt); // ssl->source_lenght ???
+		proc = des_padding(tmp, ssl->source_lenght, decrypt);
 		des_block_ciphers(ssl, proc, ssl->source_lenght);
 		free(tmp);
 	}

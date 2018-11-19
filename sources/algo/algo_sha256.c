@@ -6,30 +6,11 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:37:08 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/06 13:31:35 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 13:15:19 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sha256.h"
-
-static void					sha256_update(t_sha256 *const sha,
-		uint8_t *const data, const size_t length)
-{
-	size_t					i;
-
-	i = 0;
-	while (i < length)
-	{
-		sha->data[sha->data_length++] = data[i];
-		if (sha->data_length == 64)
-		{
-			sha256_transform(sha, sha->data);
-			sha->bit_length += 512;
-			sha->data_length = 0;
-		}
-		i++;
-	}
-}
 
 static void					sha256_finaltransform(t_sha256 *const sha,
 		uint8_t *const hash, uint32_t i)
@@ -106,6 +87,29 @@ static char					*printable_digest(
 	}
 	printable[64] = 0;
 	return (printable);
+}
+
+char						*algo_sha256_raw(t_ssl *const ssl,
+		const char *const src, const size_t len)
+{
+	t_sha256				sha;
+	static unsigned char	hash[33];
+
+	(void)ssl;
+	sha.data_length = 0;
+	sha.bit_length = 0;
+	sha.state[0] = 0x6a09e667;
+	sha.state[1] = 0xbb67ae85;
+	sha.state[2] = 0x3c6ef372;
+	sha.state[3] = 0xa54ff53a;
+	sha.state[4] = 0x510e527f;
+	sha.state[5] = 0x9b05688c;
+	sha.state[6] = 0x1f83d9ab;
+	sha.state[7] = 0x5be0cd19;
+	sha256_update(&sha, (void*)src, len);
+	sha256_finish(&sha, (void*)hash);
+	hash[32] = 0;
+	return ((char*)hash);
 }
 
 char						*algo_sha256(t_ssl *const ssl,

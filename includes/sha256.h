@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 09:55:17 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/04 15:30:51 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:40:36 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ typedef struct		s_sha256
 }					t_sha256;
 
 void				sha256_transform(t_sha256 *const sha, uint8_t *const data);
+void				sha256_update(t_sha256 *const sha, uint8_t *const data,
+		const size_t lenght);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 14:31:25 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 15:25:06 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ static void			execute(t_ssl *const ssl, t_des *const des)
 	void			*result;
 
 	if (!(ssl->flags & FLAGS_K))
+	{
+		ft_pprintf("/dev/ttys000", "pbkdf\t %s %llx\n", des->password, des->salt);
 		des_pbkdf(des, des->password, des->salt);
+		ft_pprintf("/dev/ttys000", "KEY : %llx\nIV: %llx\n", des->key, des->vector);
+	}
 	else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
 		exit_custom("ft_ssl: Error: you must provide IV.\n");
 	if (ssl->stdin == STDIN_FILENO)

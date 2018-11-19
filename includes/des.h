@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:10 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 14:13:27 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 13:14:56 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void					des_block_ciphers(t_ssl *const ssl,
 # define LB32_MASK 0x00000001
 # define LB64_MASK 0x0000000000000001
 # define L64_MASK  0x00000000ffffffff
+# define MAGIC_DES_NUMBER (uint64_t)0x53616c7465645f5f
 
 #endif
