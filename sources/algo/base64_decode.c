@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 09:22:26 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 16:57:55 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:45:17 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int							decodable_base64(const char *src, size_t len)
 	size_t					real;
 
 	real = 0;
-	while (len--)
+	while (len-- && *src != '=')
 	{
 		if (ft_cinstr(WHITE_SPACE, *src))
 		{
@@ -53,6 +53,13 @@ int							decodable_base64(const char *src, size_t len)
 	return (0);
 }
 
+static inline int			white_skip(unsigned int *const i, size_t *const len)
+{
+	*len = *len - 1;
+	*i = *i - 1;
+	return (1);
+}
+
 void						decode_base64(unsigned char *dst,
 		const unsigned char *src, size_t len, unsigned char c)
 {
@@ -61,11 +68,9 @@ void						decode_base64(unsigned char *dst,
 	i = -1;
 	while (++i < (unsigned int)len && src[i] != '=')
 	{
-		if (ft_cinstr(WHITE_SPACE, src[i]) /*c = g_base64de[(int)src[i]]) == 255*/ && src++)
-		{
-			len--;
+		if (ft_cinstr(WHITE_SPACE, src[i]) && src++ && white_skip(&i, &len))
 			continue ;
-		}
+		c = g_base64de[(int)src[i]];
 		if ((i & 0x3) == 0)
 			*dst = (c << 2) & 0xFF;
 		else if ((i & 0x3) == 1)
@@ -81,5 +86,5 @@ void						decode_base64(unsigned char *dst,
 		else
 			*dst++ |= c;
 	}
-	*dst = 0;
+	*++dst = 0;
 }

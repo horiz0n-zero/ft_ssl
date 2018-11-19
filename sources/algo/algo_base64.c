@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:31:52 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 16:35:07 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:28:51 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char					*algo_base64(t_ssl *const ssl,
 			return (ft_strsub(""));
 		}
 		ptr = malloc(((len * 8) / 6) + 1);
+		ft_memset(ptr, ((len * 8) / 6) + 1);
 		decode_base64(ptr, (const void*)src, len, 0);
 	}
 	else
