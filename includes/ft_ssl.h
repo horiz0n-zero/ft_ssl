@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:32:55 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/19 12:41:21 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/22 16:09:37 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,6 @@ void							des_hexa(const char *src,
 		uint64_t *const value);
 int								ft_cinstr(const char *src, const char c);
 char							*ft_strsub(const char *src);
+uint64_t						ft_hexa_binary(register const char *src);
 
 #endif

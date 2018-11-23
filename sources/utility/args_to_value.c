@@ -6,11 +6,34 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 15:07:05 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/15 10:03:09 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/22 16:05:20 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+
+static inline uint64_t			raw_hexa(register const char c)
+{
+	if (c >= '0' && c <= '9')
+		return ((uint64_t)c - '0');
+	else if (c >= 'a' && c <= 'z')
+		return ((uint64_t)c - 'a' + 10);
+	return ((uint64_t)c - 'A' + 10);
+}
+
+uint64_t						ft_hexa_binary(register const char *src)
+{
+	register uint64_t			r;
+
+	r = 0;
+	while (*src)
+	{
+		r |= raw_hexa(*src++);
+		if (*src)
+			r <<= 4;
+	}
+	return (r);
+}
 
 static inline void				src_upper(char *src)
 {

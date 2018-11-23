@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 13:45:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/19 15:28:01 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/23 11:03:18 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@ void				des_pbkdf(t_des *const des,
 		const void *const pass, uint64_t salt)
 {
 	const size_t	len = ft_strlen(pass);
-	char			*buffer;
-	uint64_t		*result;
+	const size_t	total_len = len + sizeof(uint64_t);
+	char			*stack_buffer;
+	char			*result;
 
-	buffer = __builtin_alloca(len + sizeof(uint64_t));
-	ft_memcpy(buffer, pass, len);
-	ft_memcpy(buffer + len, &salt, sizeof(uint64_t));
-	result = algo_md5_raw(buffer, len + sizeof(uint64_t));
-	des->key = *result++;
-	des->vector = *result;
+	salt = __builtin_bswap64(salt);
+	stack_buffer = __builtin_alloca(total_len);
+	ft_memcpy(stack_buffer, pass, len);
+	ft_memcpy(stack_buffer + len, &salt, sizeof(uint64_t));
+	result = algo_md5(NULL, stack_buffer, total_len);
+	des->vector = ft_hexa_binary(result + 16);
+	result[16] = 0;
+	des->key = ft_hexa_binary(result);
 }
 
 uint64_t			des_randomkey(void)
