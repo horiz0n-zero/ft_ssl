@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:00:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/23 11:04:11 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/26 09:43:15 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void			des_io(t_ssl *const ssl, const char *const file,
 	else
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC,
 				S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
-	if (fd < -1)
+	if (fd < 0)
 		error_file(ssl, file);
 	if (state & FLAGS_I)
 	{
@@ -66,14 +66,16 @@ static void			execute(t_ssl *const ssl, t_des *const des)
 	void			*ptr;
 	void			*result;
 
-	if (!(ssl->flags & FLAGS_K))
-		des_pbkdf(des, des->password, des->salt);
-	else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
-		exit_custom("ft_ssl: Error: you must provide IV.\n");
 	if (ssl->stdin == STDIN_FILENO)
 		ptr = read_stdin(ssl);
 	else
 		ptr = ssl_input(ssl, ssl->stdin_file, ssl->stdin);
+	if (ssl->flags & FLAGS_D && !(ssl->flags & FLAGS_K))
+		des_read_header(ssl, des, ptr);
+	if (!(ssl->flags & FLAGS_K))
+		des_pbkdf(des, des->password, des->salt);
+	else if (!(ssl->flags & FLAGS_V) && ssl->algo->settings & CBC)
+		exit_custom("ft_ssl: Error: you must provide IV.\n");
 	result = ssl->algo->checksum(ssl, ptr, ssl->source_lenght);
 	write(ssl->stdout, result, ssl->source_lenght);
 	free(result);

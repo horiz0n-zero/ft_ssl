@@ -6,7 +6,7 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:11:40 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/20 14:31:32 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/26 10:01:31 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,6 @@ static void					subkeys_calculation(t_des *const des,
 	}
 }
 
-static void					*des_padding(const char *const src,
-		const size_t len, const int decrypt)
-{
-	void *const				ptr = malloc(len + sizeof(uint64_t) + 1);
-	size_t					padding;
-
-	(void)decrypt;
-	padding = 0;
-	ft_memset(ptr, len + sizeof(uint64_t) + 1);
-	return (ptr);
-}
-// echo -n "content" | openssl des -pass "pass:password" -S 4223 | base64 ->
-// echo -n "content" | openssl des -pass "pass:password" -S 4223 -a
-// <-> echo -n "content" | openssl des -pass "pass:password" -S 4223 -a > encrypted
-// cat encrypted | openssl des -pass "pass:password" -S 4223 -a -d
-// cat encrypted | base64 -D | openssl des -pass "pass:password" -S 4223 -d
-
 char						*algo_des(t_ssl *const ssl, const char *const src,
 		const size_t len)
 {
@@ -106,13 +89,13 @@ char						*algo_des(t_ssl *const ssl, const char *const src,
 	subkeys_calculation(des, des->key);
 	if (ssl->flags & FLAGS_A && decrypt && (tmp = algo_base64(ssl, src, len)))
 	{
-		proc = des_padding(tmp, ssl->source_lenght, decrypt);
+		proc = des_padding(ssl, src, decrypt);
 		des_block_ciphers(ssl, proc, ssl->source_lenght);
 		free(tmp);
 	}
 	else
 	{
-		proc = des_padding(src, ssl->source_lenght, decrypt);
+		proc = des_padding(ssl, src, decrypt);
 		des_block_ciphers(ssl, proc, ssl->source_lenght);
 	}
 	if (ssl->flags & FLAGS_A && !decrypt)

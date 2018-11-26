@@ -6,11 +6,23 @@
 /*   By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 13:45:56 by afeuerst          #+#    #+#             */
-/*   Updated: 2018/11/23 11:03:18 by afeuerst         ###   ########.fr       */
+/*   Updated: 2018/11/23 16:12:41 by afeuerst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "des.h"
+
+void				des_read_header(t_ssl *const ssl,
+		t_des *const des, const uint64_t *src)
+{
+	if (ssl->source_lenght < (sizeof(uint64_t) * 2))
+		exit_custom("ft_ssl: Error: bad magic number.\n");
+	if (*src++ != MAGIC_DES_NUMBER)
+		exit_custom("ft_ssl: Error: bad magic number.\n");
+	des->salt = *src;
+	if (!(ssl->flags & FLAGS_P))
+		des->password = des_getpass(ssl);
+}
 
 void				des_pbkdf(t_des *const des,
 		const void *const pass, uint64_t salt)

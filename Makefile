@@ -6,7 +6,7 @@
 #    By: afeuerst <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 14:29:24 by afeuerst          #+#    #+#              #
-#    Updated: 2018/11/19 09:54:41 by afeuerst         ###   ########.fr        #
+#    Updated: 2018/11/24 13:23:09 by afeuerst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,10 @@ SRC = ./sources/ft_ssl.c \
 	./sources/algo/base64_decode.c \
 	./sources/cypher_des_verify_execute.c \
 	./sources/algo/algo_des.c \
-    ./sources/algo/des_process.c \
-    ./sources/algo/des_f.c \
+	./sources/algo/des_process.c \
+	./sources/algo/des_f.c \
 	./sources/algo/des_block_ciphers.c \
+	./sources/algo/des_padding.c \
 	./sources/utility/ft_strcomparable.c \
 	./sources/utility/ft_strlen.c \
 	./sources/utility/ft_strcmp.c \
